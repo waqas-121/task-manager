@@ -3,10 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import Test from "./Test";
 
 export default function CreateTask() {
   const navigate = useNavigate();
   const [listOfTask, setListOfTask] = useState([]);
+
   const initialValues = {
     task: "",
   };
@@ -31,20 +33,24 @@ export default function CreateTask() {
   };
 
   const hundleOnDelete = (id) => {
-    axios
-      .delete(`http://localhost:3001/api/v1/tasks/${id}`)
-      .then(() => {
-        getTasks();
-        console.log("clicked!!");
-      })
-      .catch((error) => {
-        console.log("This is delete error", error);
-      });
+    const userConfirmation = window.confirm("This will delete permanently");
+    if (userConfirmation) {
+      axios
+        .delete(`http://localhost:3001/api/v1/tasks/${id}`)
+        .then(() => {
+          getTasks();
+          console.log("clicked!!");
+        })
+        .catch((error) => {
+          console.log("This is delete error", error);
+        });
+    } else {
+      console.log("User canceled");
+    }
   };
 
   const hundleOnEdit = (id) => {
-    navigate(`/editTask/:${id}`);
-    console.log(`edit button clicked `);
+    navigate(`/editTask/${id} `);
   };
   const hundleOnSubmit = (data, { resetForm }) => {
     axios

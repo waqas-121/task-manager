@@ -31,6 +31,7 @@ const getTaskById = async (req, res) => {
     //   where: { id: req.params.id },
     // });
     const singleTaskid = req.params.id;
+    console.log(singleTaskid);
     const singleTask = await TasksModel.findByPk(singleTaskid);
     if (!singleTask) {
       return res.status(404).json({ error: "Task is Not Present" });
@@ -54,12 +55,13 @@ const updateTask = async (req, res) => {
       return res.status(404).json({ error: "Task not found" });
     }
     await task.update(updatedField);
-    res.status(200).json(updatedField);
+
+    const updatedTask = await TasksModel.findByPk(taskId);
+    res.status(200).json(updatedTask);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Problem" });
   }
-  res.json(req.body);
 };
 
 // delete the task DELETE
