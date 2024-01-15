@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "Password123#@!",
-    "database": "taskManager",
+    "password": "",
+    "database": "",
     "host": "localhost",
     "dialect": "mysql"
   },
